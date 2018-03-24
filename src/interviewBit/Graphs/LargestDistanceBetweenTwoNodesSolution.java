@@ -7,7 +7,7 @@ public class LargestDistanceBetweenTwoNodesSolution {
 	static boolean[] visited ;
 	static int ans = 0;
 	static int node =0;
-	static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+	static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();    //Adjency 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ArrayList<Integer> A = new ArrayList<>();
@@ -25,43 +25,21 @@ public class LargestDistanceBetweenTwoNodesSolution {
 	
 	public static  int solve(ArrayList<Integer> A) {
 		
-		visited = new boolean[A.size()];
-		
-		
-		for(int i=0;i<A.size();i++) {
-			graph.add(i, new ArrayList<>());
-		}
-		
-		for(int i =0;i<A.size();i++) {
-			int values = A.get(i);
-			if(values !=-1) {
-				graph.get(i).add(values);
-				graph.get(values).add(i);
-			}
-		}
-		
-		Arrays.fill(visited, false);
-		DFS(0, 0);
-		
-		Arrays.fill(visited, false);
-        ans = 0;
-        DFS(node, 0);
-		return ans;
+		ArrayList<int[]> arr = new ArrayList<>();
+        for (int i = 0; i < A.size(); ++i) {
+            arr.add(new int[2]);
+        }
+        int maxDistance = 0;
+        for (int i = A.size() - 1; i > 0; --i) {
+            int element = A.get(i);
+            int[] parent = arr.get(element);
+            int currentLength = arr.get(i)[0] + 1;
+            
+            parent[1] = Math.max(parent[1], currentLength + parent[0]);
+            parent[0] = Math.max(parent[0], currentLength);
+            maxDistance = Math.max(maxDistance, parent[1]);
+        }
+        return maxDistance == 0 ? 0 : maxDistance;
     }
-	
-	private static void DFS(int root,int d) {
-		
-		visited[root] =true;
-		
-		if (d > ans) {
-            ans = d;
-            node = root;
-        }
-		for (Integer node : graph.get(root)) {
-            if (visited[node] == false) {
-                DFS(node, d + 1);
-            }
-        }
-	}
 
 }
