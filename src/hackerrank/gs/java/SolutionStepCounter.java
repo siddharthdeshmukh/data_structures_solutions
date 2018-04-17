@@ -21,7 +21,7 @@ public class SolutionStepCounter {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-       long steps= countSteps(3);
+       long steps= countSteps(5);
        System.out.println(steps);
 	}
 
